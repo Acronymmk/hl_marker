@@ -16,9 +16,9 @@ local function create_teleport_form()
     return formspec
 end
 
-minetest.register_craftitem("hc_marker:marker", {
+minetest.register_craftitem("hl_marker:marker", {
     description = "Teleport Marker",
-    inventory_image = "hc_marker.png",
+    inventory_image = "hl_marker.png",
 
     on_use = function(itemstack, player, pointed_thing)
         local player_name = player:get_player_name()
@@ -29,7 +29,7 @@ minetest.register_craftitem("hc_marker:marker", {
         end
 
         local formspec = create_teleport_form()
-        minetest.show_formspec(player_name, "hc_marker:teleport_form", formspec)
+        minetest.show_formspec(player_name, "hl_marker:teleport_form", formspec)
         return itemstack
     end,
 })
@@ -37,7 +37,7 @@ minetest.register_craftitem("hc_marker:marker", {
 minetest.register_on_player_receive_fields(function(player, formname, fields)
     local player_name = player:get_player_name()
 
-    if formname == "hc_marker:teleport_form" then
+    if formname == "hl_marker:teleport_form" then
         for field, _ in pairs(fields) do
             if field:sub(1, 6) == "delay_" then
                 local selected_delay = tonumber(field:sub(7, -2))
@@ -48,7 +48,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
                     teleporting_players[player_name] = true
 
                     local player_inventory = player:get_inventory()
-                    local player_item = ItemStack("hc_marker:marker")
+                    local player_item = ItemStack("hl_marker:marker")
                     player_inventory:remove_item("main", player_item)
 
                     minetest.after(teleport_delay, function()
